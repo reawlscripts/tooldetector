@@ -6,9 +6,10 @@ local RunService = game:GetService("RunService")
 -- Yerel oyuncu
 local LocalPlayer = Players.LocalPlayer
 
--- GUI durumu (açık/kapalı)
+-- GUI durumu (açık/kapalı) ve mesafe sınırı
 local guiEnabled = true
-local guis = {} -- Oyuncu GUI'lerini saklamak için tablo
+local maxDistance = 1000 -- Maksimum 1000 stud mesafe
+local guis = {} -- Oyuncu GUI'lerini saklama
 
 -- RGB renk geçişi için yardımcı fonksiyon
 local function getRGBColor(t)
@@ -59,10 +60,10 @@ local function createHighlightAndLabel(character, player)
 
     -- RGB animasyonu
     local time = 0
-    local connection
-    connection = RunService.RenderStepped:Connect(function(dt)
+    local rgbConnection
+    rgbConnection = RunService.RenderStepped:Connect(function(dt)
         if not billboard or not billboard.Parent then
-            connection:Disconnect()
+            rgbConnection:Disconnect()
             return
         end
         time = time + dt
@@ -116,16 +117,42 @@ local function createHighlightAndLabel(character, player)
     updateToolLabel()
 
     -- GUI ve highlight saklama
-    guis[player] = {billboard = billboard, animateGui = animateGui, highlight = highlight, toolConnection = toolConnection}
+    guis[player] = {
+        billboard = billboard,
+        animateGui = animateGui,
+        highlight = highlight,
+        toolConnection = toolConnection,
+        rgbConnection = rgbConnection
+    }
 
     return highlight, billboard, animateGui
+end
+
+-- Mesafe kontrolü ve GUI güncelleme
+local function updatePlayerGUIs()
+    if not LocalPlayer.Character or not LocalPlayer.Character.PrimaryPart then return end
+    local localPos = LocalPlayer.Character.PrimaryPart.Position
+
+    for player, guiData in pairs(guis) do
+        if player.Character and player.Character.PrimaryPart then
+            local distance = (player.Character.PrimaryPart.Position - localPos).Magnitude
+            local shouldShow = distance <= maxDistance and guiEnabled
+            if shouldShow and not guiData.billboard.Enabled then
+                guiData.animateGui(true)
+            elseif not shouldShow and guiData.billboard.Enabled then
+                guiData.animateGui(false)
+            end
+        end
+    end
 end
 
 -- Oyunculara highlight ve etiket ekleme
 local function highlightAndLabelPlayers()
     for _, player in ipairs(Players:GetPlayers()) do
         if player ~= LocalPlayer and player.Character then
-            createHighlightAndLabel(player.Character, player)
+            if player.Character:FindFirstChild("Head") then
+                createHighlightAndLabel(player.Character, player)
+            end
         end
     end
 end
@@ -159,6 +186,7 @@ Players.PlayerRemoving:Connect(function(player)
         if guis[player].highlight then guis[player].highlight:Destroy() end
         if guis[player].billboard then guis[player].billboard:Destroy() end
         if guis[player].toolConnection then guis[player].toolConnection:Disconnect() end
+        if guis[player].rgbConnection then guis[player].rgbConnection:Disconnect() end
         guis[player] = nil
     end
 end)
@@ -168,10 +196,13 @@ UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
     if gameProcessedEvent then return end
     if input.KeyCode == Enum.KeyCode.T then
         guiEnabled = not guiEnabled
-        for _, guiData in pairs(guis) do
-            guiData.animateGui(guiEnabled)
-        end
+        updatePlayerGUIs() -- GUI'leri hemen güncelle
     end
+end)
+
+-- Mesafe kontrolü için sürekli güncelleme
+RunService.Heartbeat:Connect(function()
+    updatePlayerGUIs()
 end)
 
 -- İlk çalıştırma
