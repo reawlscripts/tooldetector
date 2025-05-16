@@ -8,7 +8,7 @@ local LocalPlayer = Players.LocalPlayer
 
 -- GUI durumu (açık/kapalı) ve mesafe sınırı
 local guiEnabled = true
-local maxDistance = 1000 -- Maksimum 1000 stud mesafe
+local maxDistance = 800 -- Maksimum 1000 stud mesafe
 local guis = {} -- Oyuncu GUI'lerini saklama
 
 -- RGB renk geçişi için yardımcı fonksiyon
