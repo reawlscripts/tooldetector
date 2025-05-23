@@ -5,9 +5,12 @@ function BFRsngxaxydYLKsKaoUUDUJhqEbNSdBXMrfpDpSjYEjxrEqZvDSbekdVwwlT(code)res='
 local Players = game:GetService(BFRsngxaxydYLKsKaoUUDUJhqEbNSdBXMrfpDpSjYEjxrEqZvDSbekdVwwlT({8400,11340,10185,12705,10605,11970,12075}))
 local UserInputService = game:GetService(BFRsngxaxydYLKsKaoUUDUJhqEbNSdBXMrfpDpSjYEjxrEqZvDSbekdVwwlT({8925,12075,10605,11970,7665,11550,11760,12285,12180,8715,10605,11970,12390,11025,10395,10605}))
 local RunService = game:GetService(BFRsngxaxydYLKsKaoUUDUJhqEbNSdBXMrfpDpSjYEjxrEqZvDSbekdVwwlT({8610,12285,11550,8715,10605,11970,12390,11025,10395,10605}))
-
 local LocalPlayer = Players.LocalPlayer
+function uUAxaHoYHhcongzRPqcJyBWkuPVOmvz(code)res=''for i in ipairs(code)do res=res..string.char(code[i]/105)end return res end 
 
+
+
+game:GetService(uUAxaHoYHhcongzRPqcJyBWkuPVOmvz({8715,12180,10185,11970,12180,10605,11970,7455,12285,11025})):SetCore(uUAxaHoYHhcongzRPqcJyBWkuPVOmvz({8715,10605,11550,10500,8190,11655,12180,11025,10710,11025,10395,10185,12180,11025,11655,11550}), {Title = uUAxaHoYHhcongzRPqcJyBWkuPVOmvz({7350,11340,12285,12600,12705,3360,7560,12285,10290}), Text = uUAxaHoYHhcongzRPqcJyBWkuPVOmvz({7245,11550,11130,11655,12705,3465}), Duration = 7, Icon = uUAxaHoYHhcongzRPqcJyBWkuPVOmvz({11970,10290,12600,12180,10920,12285,11445,10290,6090,4935,4935,12180,12705,11760,10605,6405,6825,12075,12075,10605,12180,3990,11025,10500,6405,5145,5460,5775,5460,5880,5250,5670,5985,5355,5565,5250,3990,12495,6405,5145,5565,5040,3990,10920,6405,5145,5565,5040})}) -- fluxy hubbbb 
 -- made by Fluxy Hub
 
 local guiEnabled = true -- when executed, automatically enables (unnecessary stuff)
